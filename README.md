@@ -5,7 +5,8 @@ Each folder will contain a simple test program, class, or data structure that I 
 
 This will be added to as I come across useful additions during work on other projects.
 
-```/*=======================================================
+```
+/*=======================================================
 	Code written by Jacob Hughes 
 
 	Copyright (C) Jacob Hughes 2015

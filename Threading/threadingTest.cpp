@@ -1,4 +1,5 @@
-#define WIN32_LEAN_AND_MEAN
+#pragma once
+
 #include <windows.h>
 #include <stdio.h>
 #include <process.h>
@@ -9,9 +10,18 @@ using namespace std;
 
 unsigned __stdcall threadMain(void* p);
 
+/*=======================================================
+	Test program to explore the stats of the computer
+	that this program is being run on.
+
+	Uses WindowsAPI to test threading.
+=======================================================*/
+
 int wmain(int argc, wchar_t **args) {
+	//Get the number of processors in the system
 	DWORD_PTR c = GetMaximumProcessorCount((WORD)0);
 
+	//create number of threads equal to number of processors
 	HANDLE *m_threads = new HANDLE[c];
 
 	cout << "==== System Information ====" << endl;
@@ -27,7 +37,7 @@ int wmain(int argc, wchar_t **args) {
 	cout << "============================" << endl << endl;
 
 	for (DWORD_PTR i = 0; i < c; i++) {
-		//DWORD_PTR m_id = 0;
+		
 		unsigned m_id = 0;
 		DWORD_PTR m_mask = 1 << i;
 		//

@@ -1,3 +1,14 @@
+/*=======================================================
+Code written by Jacob Hughes
+
+Copyright (C) Jacob Hughes 2015
+
+Contact for use:
+
+yacol@gmail.com
+https://github.com/JacobHughes/
+=======================================================*/
+
 #include "Logger.h"
 
 

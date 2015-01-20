@@ -25,5 +25,4 @@ double __forceinline iteratorAverage(vector<double>::iterator &start, vector<dou
 
 std::vector<double> simpleMovingAverage(std::vector<double> & data, int windowsize);
 
-//template<size_t rows, size_t cols>
 bool isMagicSquare(std::vector< vector<int>> matrix);

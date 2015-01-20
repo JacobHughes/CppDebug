@@ -111,6 +111,9 @@ bool isMagicSquare(std::vector< vector<int>> matrix)
 		The definition of a magic square can be found at:
 		http://mathworld.wolfram.com/MagicSquare.html
 
+		This does not check for unique numbers in each location of
+		the matrix --> this is to do later.
+
 	==============================================================*/
 
 	/*==============================================================

@@ -9,7 +9,7 @@
 	https://github.com/JacobHughes/
 =======================================================*/
 
-#include "JacobMaths.h"
+#include "MathsAndStatistics.h"
 
 std::vector<double> simpleMovingAverage(vector<double> & data, int windowsize)
 {
@@ -99,4 +99,116 @@ std::vector<double> simpleMovingAverage(vector<double> & data, int windowsize)
 	//Return the smoothed vector
 	return smooth_data;
 
+}
+
+//template<size_t rows, size_t cols>
+bool isMagicSquare(std::vector< vector<int>> matrix)
+{
+	/*==============================================================
+		This function takes an arbitrary size matrix and determines
+		whether or not it is a magic square.
+
+		The definition of a magic square can be found at:
+		http://mathworld.wolfram.com/MagicSquare.html
+
+	==============================================================*/
+
+	/*==============================================================
+		First the matric needs to actually be a square
+	==============================================================*/
+
+	int noOfRows = matrix.size();
+	int noOfColumns = matrix.at(0).size();
+
+	if (noOfColumns != noOfRows)
+	{
+		return false;
+	}
+
+	/*==============================================================
+		Next sum each row and compare
+	==============================================================*/
+	int currentSum = 0;
+
+	//Get first row sum
+	for (int j = 0; j < noOfRows; ++j)
+	{
+		currentSum += matrix.at(0).at(j);
+	}
+
+	int previousValue = currentSum;
+	currentSum = 0;
+
+	for (auto i = 1; i < noOfColumns; ++i)
+	{
+		//Loop over each item in this and sum
+		for (auto j = 0; j < noOfRows; ++j)
+		{
+			currentSum += matrix.at(i).at(j);
+		}
+
+		if (previousValue != currentSum)
+		{
+			return false;
+		}
+
+		currentSum = 0;
+	}
+
+
+	/*==============================================================
+		Next sum over each column and compare
+	==============================================================*/
+	for (auto j = 0; j < noOfRows; ++j)
+	{
+		//Loop over each item in this and sum
+		for (auto i = 0; i < noOfColumns; ++i)
+		{
+			currentSum += matrix.at(i).at(j);
+		}
+
+		if (previousValue != currentSum)
+		{
+			return false;
+		}
+
+		currentSum = 0;
+	}
+
+	
+	/*==============================================================
+		Now sum top-left to bottom-right diagonal and compare
+	==============================================================*/
+	for (auto i = 0; i < noOfRows; ++i)
+	{
+		currentSum += matrix.at(i).at(i);
+	}
+
+	if (previousValue != currentSum)
+	{
+		return false;
+	}
+
+	currentSum = 0;
+	
+
+	/*==============================================================
+		Now sum bottom-left to top-right diagonal and compare
+	==============================================================*/
+	int i = matrix.size() - 1;
+	for (auto j = 0; j < noOfColumns; ++j)
+	{
+		currentSum += matrix.at(i).at(j);
+		--i;
+	}
+	
+	if (previousValue != currentSum)
+	{
+		return false;
+	}
+
+	/*==============================================================
+		Finally, we have a magic Square!
+	==============================================================*/
+	return true;
 }

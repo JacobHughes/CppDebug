@@ -2,7 +2,7 @@
 
 #include "HashKeyFunctions.h"
 
-unsigned rotatingHash(void *key, int len)
+inline unsigned rotatingHash(void *key, int len)
 {
 	unsigned char *p = (unsigned char *)key;
 	unsigned h = 0;
@@ -15,7 +15,7 @@ unsigned rotatingHash(void *key, int len)
 	return h;
 }
 
-unsigned bernsteinHash(void *key, int len)
+inline unsigned bernsteinHash(void *key, int len)
 {
 	unsigned char *p = (unsigned char *)key;
 	unsigned h = 0;
@@ -28,7 +28,7 @@ unsigned bernsteinHash(void *key, int len)
 	return h;
 }
 
-unsigned modifiedBernsteinHash(void *key, int len)
+inline unsigned modifiedBernsteinHash(void *key, int len)
 {
 	unsigned char *p = (unsigned char *)key;
 	unsigned h = 0;
@@ -41,7 +41,7 @@ unsigned modifiedBernsteinHash(void *key, int len)
 	return h;
 }
 
-unsigned shiftAddXorHash(void *key, int len)
+inline unsigned shiftAddXorHash(void *key, int len)
 {
 	unsigned char *p = (unsigned char *)key;
 	unsigned h = 0;
@@ -54,7 +54,7 @@ unsigned shiftAddXorHash(void *key, int len)
 	return h;
 }
 
-unsigned FNVHash(void *key, int len)
+inline unsigned FNVHash(void *key, int len)
 {
 	unsigned char *p = (unsigned char *)key;
 	unsigned h = 0;
@@ -67,7 +67,7 @@ unsigned FNVHash(void *key, int len)
 	return h;
 }
 
-unsigned OneAtATimeHash(void *key, int len)
+inline unsigned OneAtATimeHash(void *key, int len)
 {
 	unsigned char *p = (unsigned char *)key;
 	unsigned h = 0;
@@ -87,23 +87,10 @@ unsigned OneAtATimeHash(void *key, int len)
 	return h;
 }
 
-unsigned JSWHash(void *key, int len)
+inline unsigned ELFHash(void *key, int len)
 {
 	unsigned char *p = (unsigned char *)key;
-	unsigned h = 0;
-	int i;
-
-	for (i = 0; i < len; ++i)
-	{
-		h = (h << 1 | h >> 31) ^ tab[p[i]];
-	}
-	return h;
-}
-
-unsigned ELFHash(void *key, int len)
-{
-	unsigned char *p = (unsigned char *)key;
-	unsigned h = 0;
+	unsigned h = 0, g;
 	int i;
 
 	for (i = 0; i < len; ++i)

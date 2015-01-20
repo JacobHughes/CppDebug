@@ -41,12 +41,82 @@ unsigned modifiedBernsteinHash(void *key, int len)
 	return h;
 }
 
-unsigned shiftAddXorHash(void *key, int len){}
+unsigned shiftAddXorHash(void *key, int len)
+{
+	unsigned char *p = (unsigned char *)key;
+	unsigned h = 0;
+	int i;
 
-unsigned FNVHash(void *key, int len){}
+	for (i = 0; i < len; ++i)
+	{
+		h ^= (h << 5) + (h >> 2) + p[i];
+	}
+	return h;
+}
 
-unsigned OneAtATimeHash(void *key, int len){}
+unsigned FNVHash(void *key, int len)
+{
+	unsigned char *p = (unsigned char *)key;
+	unsigned h = 0;
+	int i;
 
-unsigned JSWHash(void *key, int len){}
+	for (i = 0; i < len; ++i)
+	{
+		h = (h * 16777619) ^ p[i];
+	}
+	return h;
+}
 
-unsigned ELFHash(void *key, int len){}
+unsigned OneAtATimeHash(void *key, int len)
+{
+	unsigned char *p = (unsigned char *)key;
+	unsigned h = 0;
+	int i;
+
+	for (i = 0; i < len; ++i)
+	{
+		h += p[i];
+		h += (h << 10);
+		h ^= (h >> 6);
+	}
+
+	h += (h << 3);
+	h ^= (h >> 11);
+	h += (h << 15);
+
+	return h;
+}
+
+unsigned JSWHash(void *key, int len)
+{
+	unsigned char *p = (unsigned char *)key;
+	unsigned h = 0;
+	int i;
+
+	for (i = 0; i < len; ++i)
+	{
+		h = (h << 1 | h >> 31) ^ tab[p[i]];
+	}
+	return h;
+}
+
+unsigned ELFHash(void *key, int len)
+{
+	unsigned char *p = (unsigned char *)key;
+	unsigned h = 0;
+	int i;
+
+	for (i = 0; i < len; ++i)
+	{
+		h = (h << 4) + p[i];
+		g = h & 0xf0000000L;
+		
+		if (g != 0)
+		{
+			h ^= g >> 24;
+		}
+		
+		h &= ~g;
+	}
+	return h;
+}

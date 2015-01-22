@@ -5,7 +5,7 @@
 
 	Contact for use:
 
-	yacol@gmail.com
+	yacolt@gmail.com
 	https://github.com/JacobHughes/
 =======================================================*/
 

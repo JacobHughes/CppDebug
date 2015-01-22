@@ -1,12 +1,12 @@
 /*=======================================================
-Code written by Jacob Hughes
+	Code written by Jacob Hughes
 
-Copyright (C) Jacob Hughes 2015
+	Copyright (C) Jacob Hughes 2015
 
-Contact for use:
+	Contact for use:
 
-yacol@gmail.com
-https://github.com/JacobHughes/
+	yacolt@gmail.com
+	https://github.com/JacobHughes/
 =======================================================*/
 
 #include "CppDebug.h"

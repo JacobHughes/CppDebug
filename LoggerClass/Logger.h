@@ -16,6 +16,7 @@
 #include <iostream>
 #include <ctime>
 #include <mutex>
+#include <memory>
 
 //Different modes for the Logger
 enum LoggerMode
@@ -53,7 +54,7 @@ public:
 	//Static instance to ensure only one Logger can exist
 	static Logger & instance()
 	{
-		static Logger *instance = new Logger();
+		static std::unique_ptr<Logger> instance(new Logger);
 		return *instance;
 	}
 

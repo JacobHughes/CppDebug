@@ -215,3 +215,81 @@ bool isMagicSquare(std::vector< vector<int>> matrix)
 	==============================================================*/
 	return true;
 }
+
+struct_Histogram histogram(vector<double> data, double binWidth)
+{
+	/*
+		This function creates a histogram from the provided
+		data.
+
+		The bins are automatically generated using binWidth
+		and the minimum and maximum values of the data.
+	
+	*/
+	int numberOfBins = static_cast<int>( ceil( *max_element(data.begin(), data.end()) - *min_element(data.begin(), data.end()) / binWidth) + 1);
+
+	vector<double> binEdges(numberOfBins, 0.0);
+	vector<double> binCounts(numberOfBins, 0.0);
+
+	for (int i = 0; i < binEdges.size(); ++i)
+	{
+		binEdges.at(i) = (binWidth * i) + *min_element(data.begin(), data.end());
+	}
+
+	for (int i = 0; i < data.size(); ++i)
+	{
+		int binIndex = static_cast<int>( (data.at(i) - binEdges.at(0))/binWidth );
+		if (binIndex >= binEdges.size())
+		{
+			binIndex = binEdges.size()-1;
+		}
+		binCounts.at(binIndex)++;
+	}
+
+	struct_Histogram result;
+
+	result.binEdges = binEdges;
+	result.binCounts = binCounts;
+
+	return result;
+}
+
+struct_Histogram histogram(vector<double> data, double binWidth, double binStart, double binStop)
+{
+	/*
+	This function creates a histogram from the provided
+	data.
+
+	The bins are automatically generated using binWidth
+	and the minimum and maximum values of the data.
+
+	This overload specifies the start bin and end bin.
+
+	*/
+	int numberOfBins = static_cast<int>(ceil(binStop - binStart / binWidth) + 1);
+
+	vector<double> binEdges(numberOfBins, 0.0);
+	vector<double> binCounts(numberOfBins, 0.0);
+
+	for (int i = 0; i < binEdges.size(); ++i)
+	{
+		binEdges.at(i) = (binWidth * i) + binStart;
+	}
+
+	for (int i = 0; i < data.size(); ++i)
+	{
+		int binIndex = static_cast<int>((data.at(i) - binEdges.at(0)) / binWidth);
+		if (binIndex >= binEdges.size())
+		{
+			binIndex = binEdges.size() - 1;
+		}
+		binCounts.at(binIndex)++;
+	}
+
+	struct_Histogram result;
+
+	result.binEdges = binEdges;
+	result.binCounts = binCounts;
+
+	return result;
+}

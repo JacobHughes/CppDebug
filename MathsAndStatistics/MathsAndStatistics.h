@@ -14,8 +14,16 @@
 #include <vector>
 #include <iterator>
 #include <numeric>
+#include <cmath>
+#include <algorithm>
 
 using namespace std;
+
+struct struct_Histogram
+{
+	std::vector<double> binEdges;
+	std::vector<double> binCounts;
+};
 
 double __forceinline iteratorAverage(vector<double>::iterator &start, vector<double>::iterator &end)
 {
@@ -26,3 +34,7 @@ double __forceinline iteratorAverage(vector<double>::iterator &start, vector<dou
 std::vector<double> simpleMovingAverage(std::vector<double> & data, int windowsize);
 
 bool isMagicSquare(std::vector< vector<int>> matrix);
+
+struct_Histogram histogram(vector<double> data, double binWidth);
+
+struct_Histogram histogram(vector<double> data, double binWidth, double binStart, double binStop);

@@ -218,78 +218,132 @@ bool isMagicSquare(std::vector< vector<int>> matrix)
 
 struct_Histogram histogram(vector<double> data, double binWidth)
 {
-	/*
+	/*==============================================================
 		This function creates a histogram from the provided
 		data.
 
 		The bins are automatically generated using binWidth
 		and the minimum and maximum values of the data.
 	
-	*/
+	==============================================================*/
+
+	/*==============================================================
+		First calculate the number of bins based on the maximum
+		and minimum elements in the data, and the specified bin
+		width
+	==============================================================*/
 	int numberOfBins = static_cast<int>( ceil( *max_element(data.begin(), data.end()) - *min_element(data.begin(), data.end()) / binWidth) + 1);
 
-	vector<double> binEdges(numberOfBins, 0.0);
-	vector<double> binCounts(numberOfBins, 0.0);
+	/*==============================================================
+		Pre-allocate the bin edges and bin counts which will be
+		returned later.
+	==============================================================*/
+	struct_Histogram result;
 
+	result.binEdges(numberOfBins, 0.0);
+	result.binCounts(numberOfBins, 0.0);
+
+	/*==============================================================
+		Create the vector of bin edges.
+
+		This is just the index x binwidth incrementing from the 
+		first value in the data.
+
+		The first value in the data specifies the lowest bin, as
+		above.
+	==============================================================*/
 	for (int i = 0; i < binEdges.size(); ++i)
 	{
 		binEdges.at(i) = (binWidth * i) + *min_element(data.begin(), data.end());
 	}
 
+	/*==============================================================
+		Now transfer the data into the histogram.
+
+		This transfer function touches each data item exactly once.
+	==============================================================*/
 	for (int i = 0; i < data.size(); ++i)
 	{
+		//Determin the index of the correct bin
 		int binIndex = static_cast<int>( (data.at(i) - binEdges.at(0))/binWidth );
+
+		//Check we do not exceed the container
 		if (binIndex >= binEdges.size())
 		{
 			binIndex = binEdges.size()-1;
 		}
+
+		//Increment the counts at this bin
 		binCounts.at(binIndex)++;
 	}
 
-	struct_Histogram result;
-
-	result.binEdges = binEdges;
-	result.binCounts = binCounts;
-
+	/*==============================================================
+		Return the histogram structure!
+	==============================================================*/
 	return result;
 }
 
 struct_Histogram histogram(vector<double> data, double binWidth, double binStart, double binStop)
 {
-	/*
-	This function creates a histogram from the provided
-	data.
+	/*==============================================================
+		This function creates a histogram from the provided
+		data.
 
-	The bins are automatically generated using binWidth
-	and the minimum and maximum values of the data.
+		The bins are automatically generated using binWidth
+		and the minimum and maximum values of the data.
 
-	This overload specifies the start bin and end bin.
+		This overload specifies the start bin and end bin.
 
-	*/
+	==============================================================*/
+
+	/*==============================================================
+		First calculate the number of bins based first bin value,
+		the final bin value, and the bin width.
+	==============================================================*/
 	int numberOfBins = static_cast<int>(ceil(binStop - binStart / binWidth) + 1);
 
-	vector<double> binEdges(numberOfBins, 0.0);
-	vector<double> binCounts(numberOfBins, 0.0);
+	/*==============================================================
+	Pre-allocate the bin edges and bin counts which will be
+	returned later.
+	==============================================================*/
+	struct_Histogram result;
 
+	result.binEdges(numberOfBins, 0.0);
+	result.binCounts(numberOfBins, 0.0);
+
+	/*==============================================================
+		Create the vector of bin edges.
+
+		This is just the index x binwidth incrementing from the
+		starting bin.
+	==============================================================*/
 	for (int i = 0; i < binEdges.size(); ++i)
 	{
 		binEdges.at(i) = (binWidth * i) + binStart;
 	}
 
+	/*==============================================================
+		Now transfer the data into the histogram.
+
+		This transfer function touches each data item exactly once.
+	==============================================================*/
 	for (int i = 0; i < data.size(); ++i)
 	{
+		//Determin the index of the correct bin
 		int binIndex = static_cast<int>((data.at(i) - binEdges.at(0)) / binWidth);
+
+		//Check we do not exceed the container
 		if (binIndex >= binEdges.size())
 		{
 			binIndex = binEdges.size() - 1;
 		}
+
+		//Increment the counts at this bin
 		binCounts.at(binIndex)++;
 	}
 
-	struct_Histogram result;
-
-	result.binEdges = binEdges;
-	result.binCounts = binCounts;
-
+	/*==============================================================
+		Return the histogram structure!
+	==============================================================*/
 	return result;
 }

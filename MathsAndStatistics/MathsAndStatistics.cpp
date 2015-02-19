@@ -240,8 +240,8 @@ struct_Histogram histogram(vector<double> data, double binWidth)
 	==============================================================*/
 	struct_Histogram result;
 
-	result.binEdges(numberOfBins, 0.0);
-	result.binCounts(numberOfBins, 0.0);
+	result.binEdges.assign(numberOfBins, 0.0);
+	result.binCounts.assign(numberOfBins, 0.0);
 
 	/*==============================================================
 		Create the vector of bin edges.
@@ -252,9 +252,9 @@ struct_Histogram histogram(vector<double> data, double binWidth)
 		The first value in the data specifies the lowest bin, as
 		above.
 	==============================================================*/
-	for (int i = 0; i < binEdges.size(); ++i)
+	for (int i = 0; i < result.binEdges.size(); ++i)
 	{
-		binEdges.at(i) = (binWidth * i) + *min_element(data.begin(), data.end());
+		result.binEdges.at(i) = (binWidth * i) + *min_element(data.begin(), data.end());
 	}
 
 	/*==============================================================
@@ -265,16 +265,16 @@ struct_Histogram histogram(vector<double> data, double binWidth)
 	for (int i = 0; i < data.size(); ++i)
 	{
 		//Determin the index of the correct bin
-		int binIndex = static_cast<int>( (data.at(i) - binEdges.at(0))/binWidth );
+		int binIndex = static_cast<int>((data.at(i) - result.binEdges.at(0)) / binWidth);
 
 		//Check we do not exceed the container
-		if (binIndex >= binEdges.size())
+		if (binIndex >= result.binEdges.size())
 		{
-			binIndex = binEdges.size()-1;
+			binIndex = result.binEdges.size() - 1;
 		}
 
 		//Increment the counts at this bin
-		binCounts.at(binIndex)++;
+		result.binCounts.at(binIndex)++;
 	}
 
 	/*==============================================================
@@ -300,7 +300,7 @@ struct_Histogram histogram(vector<double> data, double binWidth, double binStart
 		First calculate the number of bins based first bin value,
 		the final bin value, and the bin width.
 	==============================================================*/
-	int numberOfBins = static_cast<int>(ceil(binStop - binStart / binWidth) + 1);
+	int numberOfBins = static_cast<int>((ceil(binStop - binStart) / binWidth) + 1);
 
 	/*==============================================================
 	Pre-allocate the bin edges and bin counts which will be
@@ -308,8 +308,8 @@ struct_Histogram histogram(vector<double> data, double binWidth, double binStart
 	==============================================================*/
 	struct_Histogram result;
 
-	result.binEdges(numberOfBins, 0.0);
-	result.binCounts(numberOfBins, 0.0);
+	result.binEdges.assign(numberOfBins, 0.0);
+	result.binCounts.assign(numberOfBins, 0.0);
 
 	/*==============================================================
 		Create the vector of bin edges.
@@ -317,9 +317,9 @@ struct_Histogram histogram(vector<double> data, double binWidth, double binStart
 		This is just the index x binwidth incrementing from the
 		starting bin.
 	==============================================================*/
-	for (int i = 0; i < binEdges.size(); ++i)
+	for (int i = 0; i < result.binEdges.size(); ++i)
 	{
-		binEdges.at(i) = (binWidth * i) + binStart;
+		result.binEdges.at(i) = (binWidth * i) + binStart;
 	}
 
 	/*==============================================================
@@ -330,16 +330,16 @@ struct_Histogram histogram(vector<double> data, double binWidth, double binStart
 	for (int i = 0; i < data.size(); ++i)
 	{
 		//Determin the index of the correct bin
-		int binIndex = static_cast<int>((data.at(i) - binEdges.at(0)) / binWidth);
+		int binIndex = static_cast<int>((data.at(i) - result.binEdges.at(0)) / binWidth);
 
 		//Check we do not exceed the container
-		if (binIndex >= binEdges.size())
+		if (binIndex >= result.binEdges.size())
 		{
-			binIndex = binEdges.size() - 1;
+			binIndex = result.binEdges.size() - 1;
 		}
 
 		//Increment the counts at this bin
-		binCounts.at(binIndex)++;
+		result.binCounts.at(binIndex)++;
 	}
 
 	/*==============================================================

@@ -122,3 +122,19 @@ __forceinline T meanAverage(vector<T> &data)
 	auto sum = std::accumulate(data.begin(), data.end(), T());
 	return sum / data.size();
 }
+
+/*=======================================================
+	Chi2 test
+=======================================================*/
+template <typename T>
+T chiSquaredTest(vector<T> &expected, vector<T> &observed)
+{
+	T result;
+
+	for (int i = 0; i < expected.size(); ++i)
+	{
+		result += ((expected.at(i) - observed.at(i)) * (expected.at(i) - observed.at(i))) / expected.at(i);
+	}
+
+	return result;
+}

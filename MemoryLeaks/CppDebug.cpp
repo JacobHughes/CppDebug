@@ -42,7 +42,7 @@ int setUpDebugEnvironment()
 		std:cerr << "Error starting _CrtDumpMemoryLeaks(). WHAT: " << e.what() << endl;
 
 		//Return failure, memory leaks not logged
-		return fail;
+		return static_cast<int>fail;
 	}
 	
 	try
@@ -56,12 +56,12 @@ int setUpDebugEnvironment()
 		std:cerr << "Error setting debug flags _CrtSetDbgFlag(). WHAT: " << e.what() << endl;
 
 		//Return partial success, memory leaks logged but flags not set
-		return partial;
+		return static_cast<int>partial;
 	}
 	
 
 	//Return total success
-	return success;
+	return static_cast<int>success;
 }
 
 int debugMemoryLocation(int memoryLocation)
@@ -93,10 +93,10 @@ int debugMemoryLocation(int memoryLocation)
 		std:cerr << "Error setting break point _CrtSetBreakAlloc(). WHAT: " << e.what() << endl;
 
 		//Return partial success, memory leaks logged but flags not set
-		return fail;
+		return static_cast<int>fail;
 	}
 
 	//Return total success
-	return success;
+	return static_cast<int>success;
 }
 

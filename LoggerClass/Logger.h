@@ -54,8 +54,8 @@ public:
 	//Static instance to ensure only one Logger can exist
 	static Logger & instance()
 	{
-		static std::unique_ptr<Logger> instance(new Logger);
-		return *instance;
+		static Logger instance;
+		return instance;
 	}
 
 	~Logger();
@@ -72,7 +72,11 @@ public:
 protected:
 	//Constructor is protected / private
 	Logger();
-
+	
+	//remove the copy and = methods
+	Logger(Logger const&) = delete;
+	void operator=(Logger const&) = delete;
+	
 	//Set the default logging mode to be verbose
 	LoggerMode mode = verbose;
 	

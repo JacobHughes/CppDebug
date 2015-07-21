@@ -39,10 +39,10 @@ int setUpDebugEnvironment()
 	catch (exception e)
 	{
 		//Catch any exception and see what it is
-		std:cerr << "Error starting _CrtDumpMemoryLeaks(). WHAT: " << e.what() << endl;
+		std::cerr << "Error starting _CrtDumpMemoryLeaks(). WHAT: " << e.what() << endl;
 
 		//Return failure, memory leaks not logged
-		return static_cast<int>fail;
+		return static_cast<int>(fail);
 	}
 	
 	try
@@ -53,15 +53,15 @@ int setUpDebugEnvironment()
 	catch (exception e)
 	{
 		//Catch any exception and see what it is
-		std:cerr << "Error setting debug flags _CrtSetDbgFlag(). WHAT: " << e.what() << endl;
+		std::cerr << "Error setting debug flags _CrtSetDbgFlag(). WHAT: " << e.what() << endl;
 
 		//Return partial success, memory leaks logged but flags not set
-		return static_cast<int>partial;
+		return static_cast<int>(partial);
 	}
 	
 
 	//Return total success
-	return static_cast<int>success;
+	return static_cast<int>(success);
 }
 
 int debugMemoryLocation(int memoryLocation)
@@ -73,7 +73,7 @@ int debugMemoryLocation(int memoryLocation)
 		Return:
 		0 => total failure
 		1 => total success
-	==================================================*/
+		==================================================*/
 
 	enum results
 	{
@@ -90,13 +90,13 @@ int debugMemoryLocation(int memoryLocation)
 	{
 
 		//Catch any exception and see what it is
-		std:cerr << "Error setting break point _CrtSetBreakAlloc(). WHAT: " << e.what() << endl;
+	std:cerr << "Error setting break point _CrtSetBreakAlloc(). WHAT: " << e.what() << endl;
 
 		//Return partial success, memory leaks logged but flags not set
-		return static_cast<int>fail;
+		return static_cast<int>(fail);
 	}
 
 	//Return total success
-	return static_cast<int>success;
-}
+	return static_cast<int>(success);
 
+}

@@ -27,8 +27,8 @@ enum LoggerMode
 
 enum LoggerLevel
 {
-	normal,		//normal level messages
-	critical	//critical level messages
+	LoggerLevel_normal,		//normal level messages
+	LoggerLevel_critical	//critical level messages
 };
 
 using namespace std;
@@ -64,7 +64,7 @@ public:
 	inline void setMode(LoggerMode m){ this->mode = m; };
 
 	//operator<< to output to the normal level log file
-	inline void operator << (const string &message) { this->log(normal, message); };
+	inline void operator << (const string &message) { this->log(LoggerLevel_normal, message); };
 	
 	//Function to log a message
 	void log(LoggerLevel level, const string &message);

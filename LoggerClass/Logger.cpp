@@ -65,7 +65,7 @@ void Logger::log(LoggerLevel level, const string &message)
 
 	
 	//If this message is critical, write to critical log
-	if (level == critical)
+	if (level == LoggerLevel_critical)
 	{
 		criticalLog << timeStamp << message << endl;
 	}

@@ -53,5 +53,8 @@
     <ClInclude Include="..\MemoryLeaks\CppDebug.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\Sorting\sorting.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

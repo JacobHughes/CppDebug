@@ -15,7 +15,7 @@
 #include "MemoryLeaks\CppDebug.h"
 
 //Include sorting resources
-// #include "Sorting\"
+#include "Sorting\sorting.h"
 
 //Include tree resources
 // #include "Trees\"

@@ -7,20 +7,17 @@ using namespace std;
 void testSelectionSort(void)
 {
 	Logger::instance().log(LoggerLevel_normal, "Now testing selection sort");
-	vector<int> myVector;
-	myVector.push_back(10);
-	myVector.push_back(9);
-	myVector.push_back(8);
-	myVector.push_back(7);
-	myVector.push_back(6);
-	myVector.push_back(5);
-	myVector.push_back(4);
-	myVector.push_back(3);
-	myVector.push_back(2);
-	myVector.push_back(1);
+	
+	srand(time(NULL));
+	
+	vector<int> myVector(10000, 1);
+	for (auto i = 0; i < myVector.size(); ++i)
+	{
+		myVector.at(i) = rand() % 10000 + 1; //random number in the range 1 - 10000
+	}
 
 	string myVectorStr;
-	for (auto i = 0; i < myVector.size(); ++i)
+	for (auto i = 0; i < 11; ++i)
 	{
 		myVectorStr += to_string(myVector.at(i));
 		myVectorStr += " ";
@@ -31,30 +28,42 @@ void testSelectionSort(void)
 
 	Logger::instance().log(LoggerLevel_normal, "Before sorting myVector is: " + myVectorStr);
 
+	clock_t start;
+	start = std::clock();
 	basicSelectionSort(myVector);
+	double basicTime = (std::clock() - start) / (double)CLOCKS_PER_SEC;
 
 	myVectorStr = "";
-	for (auto i = 0; i < myVector.size(); ++i)
+	for (auto i = 0; i < 11; ++i)
 	{
 		myVectorStr += to_string(myVector.at(i));
 		myVectorStr += " ";
 	}
 
 	Logger::instance().log(LoggerLevel_normal, "After basicSelectionSort myVector is: " + myVectorStr);
-
-	vector<int>::iterator f = myVector2.begin();
-	vector<int>::iterator l = myVector2.end();
-
-	selection_sort(f, l);
+	Logger::instance().log(LoggerLevel_normal, "This took " + to_string(basicTime) + "s.");
 
 	myVectorStr = "";
-	for (auto i = 0; i < myVector2.size(); ++i)
+	for (auto i = 0; i < 11; ++i)
+	{
+		myVectorStr += to_string(myVector2.at(i));
+		myVectorStr += " ";
+	}
+	Logger::instance().log(LoggerLevel_normal, "Before sorting myVector2 is (same as myVector): " + myVectorStr);
+
+	start = std::clock();
+	selection_sort(myVector2.begin(), myVector2.end());
+	double iterTime = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+
+	myVectorStr = "";
+	for (auto i = 0; i < 11; ++i)
 	{
 		myVectorStr += to_string(myVector2.at(i));
 		myVectorStr += " ";
 	}
 
-	Logger::instance().log(LoggerLevel_normal, "After selection_sort myVector is: " + myVectorStr);
+	Logger::instance().log(LoggerLevel_normal, "After selection_sort myVector2 is: " + myVectorStr);
+	Logger::instance().log(LoggerLevel_normal, "This took " + to_string(iterTime) + "s.");
 }
 
 int main()

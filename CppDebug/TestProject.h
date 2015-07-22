@@ -19,3 +19,6 @@
 
 //Include tree resources
 // #include "Trees\"
+
+#include <time.h>
+#include <stdlib.h>

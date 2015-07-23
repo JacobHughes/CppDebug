@@ -65,3 +65,38 @@ void selection_sort(ForwardIterator first, ForwardIterator last, Compare cmp = C
 		std::iter_swap(selection, i);
 	}
 }
+
+template<typename T>
+void basicInsertionSort(vector<T>& t)
+{
+	for (auto i = 1; i < t.size(); ++i)
+	{
+		T nextItem = t.at(i);
+		auto loc = i;
+
+		//While (we aren't at the first element in the vector)
+		//AND (the previous item is larger than the current item)
+		while ( (loc > 0) && (t.at(loc - 1) > nextItem  ))
+		{
+			//Shift the item in loc-1 to the right
+			t.at(loc) = t.at(loc - 1);
+			loc--;
+		}
+
+		//Since everything (or nothing) got shifted, loc is where
+		//next item should go.
+		t.at(loc) = nextItem;
+	}
+}
+
+template< typename ForwardIterator, typename Compare = std::less<typename std::iterator_traits<ForwardIterator>::value_type> >
+void insertion_sort(ForwardIterator first, ForwardIterator last, Compare cmp = Compare())
+{
+	//Iterate through the container
+	for (auto it = first; it != last; ++it) {
+		//Get the item to sort
+		auto const insertion = std::upper_bound(first, it, *it, cmp);
+		//Left rotation so that insertion is first
+		std::rotate(insertion, it, std::next(it));
+	}
+}

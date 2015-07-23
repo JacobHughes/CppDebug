@@ -21,7 +21,20 @@ For C++ generics, here is an excellent link: [stackoverflow selection sort](http
 
 ## Insertion Sort ##
 
-for C++ generics, here is an excellent link: [stackoverflow insertion sort](http://stackoverflow.com/questions/14493978/running-time-for-insertion-sort/14578502#14578502 "stackoverflow").
+This sorting algorithm examines each element in the vector/array to be sorted, and places it in the correct position in the array. 
+
+Complexity/efficiency:
+
+- Best case:		O(n) 
+- Average case:		O(n^2)
+- Worst case:		O(n^2)
+
+
+For C++ generics, here is an excellent link: [stackoverflow insertion sort](http://stackoverflow.com/questions/14493978/running-time-for-insertion-sort/14578502#14578502 "stackoverflow").
+
+
+
+
 
 ## Mergesort ##
 

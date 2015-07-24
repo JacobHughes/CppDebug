@@ -8,7 +8,7 @@ void testSelectionSort(void)
 {
 	Logger::instance().log(LoggerLevel_normal, "Now testing selection sort");
 	
-	srand(time(NULL));
+	srand((unsigned)time(NULL));
 	
 	vector<int> myVector(10000, 1);
 	for (auto i = 0; i < myVector.size(); ++i)
@@ -70,7 +70,7 @@ void testInsertionSort(void)
 {
 	Logger::instance().log(LoggerLevel_normal, "Now testing insertion sort");
 
-	srand(time(NULL));
+	srand((unsigned)time(NULL));
 
 	vector<int> myVector(10000, 1);
 	for (auto i = 0; i < myVector.size(); ++i)
@@ -135,6 +135,8 @@ int main()
 	testSelectionSort();
 
 	testInsertionSort();
+
+
 
 	Logger::instance() << "Press the enter key to exit...";
 	std::cin.ignore(std::cin.rdbuf()->in_avail() + 1);

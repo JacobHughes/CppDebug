@@ -68,7 +68,19 @@ void selection_sort(ForwardIterator first, ForwardIterator last, Compare cmp = C
 
 template<typename T>
 void basicInsertionSort(vector<T>& t)
-{
+{	
+	/*
+	This sorting algorithm examines each element in the vector/array 
+	to be sorted, and places it in the correct position in the array.
+
+	This is the basic / naive implementation.
+
+	Complexity / efficiency:
+	Best case:		O(  n  )
+	Worst case:		O(n ^ 2)
+	Average case:	O(n ^ 2)
+	*/
+
 	for (auto i = 1; i < t.size(); ++i)
 	{
 		T nextItem = t.at(i);
@@ -92,6 +104,21 @@ void basicInsertionSort(vector<T>& t)
 template< typename ForwardIterator, typename Compare = std::less<typename std::iterator_traits<ForwardIterator>::value_type> >
 void insertion_sort(ForwardIterator first, ForwardIterator last, Compare cmp = Compare())
 {
+	/*
+	This sorting algorithm examines each element in the vector/array
+	to be sorted, and places it in the correct position in the array.
+
+	This implementation using standard library and iterators for 
+	efficiency.
+
+	This takes two forward iterators and a function to use to compare.
+
+	Complexity / efficiency:
+	Best case:		O( n )
+	Worst case:		O( n^2 )
+	Average case:	O( n^2 )
+	*/
+
 	//Iterate through the container
 	for (auto it = first; it != last; ++it) {
 		//Get the item to sort
@@ -99,4 +126,10 @@ void insertion_sort(ForwardIterator first, ForwardIterator last, Compare cmp = C
 		//Left rotation so that insertion is first
 		std::rotate(insertion, it, std::next(it));
 	}
+}
+
+template<typename T>
+void basicBubbleSort(vector<T> t)
+{
+
 }

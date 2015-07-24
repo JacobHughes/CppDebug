@@ -20,5 +20,8 @@
 //Include tree resources
 // #include "Trees\"
 
+//Include class for testing
+#include "Rectangle\rectangle.h"
+
 #include <time.h>
 #include <stdlib.h>

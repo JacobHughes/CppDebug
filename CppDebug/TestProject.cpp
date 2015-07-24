@@ -4,6 +4,55 @@
 
 using namespace std;
 
+void testRectangle()
+{
+	Logger::instance().log(LoggerLevel_normal, "Testing a rectangle");
+
+	Rectangle myR(2.5, 4.5);
+
+	Logger::instance().log(LoggerLevel_normal, "The area of this rectangle is: " + to_string(myR.getArea()));
+
+	Rectangle myR2(5.0, 5.0);
+
+	Logger::instance().log(LoggerLevel_normal, "The area of the second rectangle is: " + to_string(myR.getArea()));
+
+	bool bigger = myR > myR2;
+
+	bool smaller = myR < myR2;
+
+	Logger::instance().log(LoggerLevel_normal, "Is R1 bigger than R2? " + to_string(bigger));
+
+	Logger::instance().log(LoggerLevel_normal, "Is R1 smaller than R2? " + to_string(smaller));
+	
+
+}
+
+void sortRectangles()
+{
+	Logger::instance().log(LoggerLevel_normal, "Now testing sorting rectangle objects");
+
+	srand((unsigned)time(NULL));
+
+	vector<Rectangle> myRectangles;
+
+	for (auto i = 0; i < 10000; ++i)
+	{
+		Rectangle r(rand() % 10 + 1, rand() % 10 + 1);
+		myRectangles.push_back(r);
+	}
+
+	vector<Rectangle>myRectangles2 = myRectangles;
+	vector<Rectangle>myRectangles3 = myRectangles;
+
+	Logger::instance().log(LoggerLevel_normal, to_string(myRectangles.at(0).getArea()));
+
+	selection_sort(myRectangles.begin(),myRectangles.end());
+
+	Logger::instance().log(LoggerLevel_normal,to_string(check_sorted(myRectangles.begin(), myRectangles.end())));
+
+	insertion_sort(myRectangles2.begin(), myRectangles2.end());
+}
+
 void testSelectionSort(void)
 {
 	Logger::instance().log(LoggerLevel_normal, "Now testing selection sort");
@@ -64,6 +113,8 @@ void testSelectionSort(void)
 
 	Logger::instance().log(LoggerLevel_normal, "After selection_sort myVector2 is: " + myVectorStr);
 	Logger::instance().log(LoggerLevel_normal, "This took " + to_string(iterTime) + "s.");
+
+	Logger::instance().log(LoggerLevel_normal, to_string(check_sorted(myVector2.begin(), myVector2.end())));
 }
 
 void testInsertionSort(void)
@@ -132,9 +183,13 @@ int main()
 {
 	Logger::instance().log(LoggerLevel_critical, "Does this project work? Let's see...");
 
-	testSelectionSort();
+	//testRectangle();
 
-	testInsertionSort();
+	sortRectangles();
+
+	//testSelectionSort();
+
+	//testInsertionSort();
 
 
 

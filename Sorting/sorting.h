@@ -128,8 +128,20 @@ void insertion_sort(ForwardIterator first, ForwardIterator last, Compare cmp = C
 	}
 }
 
-template<typename T>
-void basicBubbleSort(vector<T> t)
+template< typename ForwardIterator, typename Compare = std::less_equal<typename std::iterator_traits<ForwardIterator>::value_type> >
+bool check_sorted(ForwardIterator first, ForwardIterator last, Compare cmp = Compare())
 {
+	for (auto it = first; it != last; ++it)
+	{
+		if (std::next(it) != last)
+		{
+			if (!cmp(*it, *std::next(it)))
+			{
+				return false;
+			}
+		}
+	}
+	
+	return true;
 
 }

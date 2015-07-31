@@ -161,3 +161,37 @@ bool check_sorted(ForwardIterator first, ForwardIterator last, Compare cmp = Com
 	return true;
 
 }
+
+template<typename ForwardIterator, typename Compare = std::less<typename std::iterator_traits<ForwardIterator>::value_type> >
+void merge_sort(ForwardIterator first, ForwardIterator last, Compare cmp = Compare())
+{
+	/*
+		This is an iterator implementation of the merge sort algorithm.
+
+		Merge sort breaks the container to be sorted into two parts,
+		then recursively calls merge_sort on each new half, etc, etc.
+
+		Each sorted section is then merged back in order to complete the 
+		sorting of the container.
+	
+		Complexity / efficiency:
+		Average case:	O( n * log(n) )
+	*/
+
+	//First check the size of the container we are sorting
+	auto const N = std::distance(first, last);
+	//If the container only has one item, we're already done
+	if (N < 2) return;
+
+	//Find the mid point of the container
+	auto middle = first + (N / 2);
+
+	//Merge sort the left hand side
+	merge_sort(first, middle, cmp);
+
+	//Merge sort the right hand side
+	merge_sort(middle, last, cmp);
+
+	//Finally merge the sorted sections together again
+	std::inplace_merge(first, middle, last, cmp);
+}

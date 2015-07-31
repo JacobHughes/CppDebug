@@ -131,17 +131,33 @@ void insertion_sort(ForwardIterator first, ForwardIterator last, Compare cmp = C
 template< typename ForwardIterator, typename Compare = std::less_equal<typename std::iterator_traits<ForwardIterator>::value_type> >
 bool check_sorted(ForwardIterator first, ForwardIterator last, Compare cmp = Compare())
 {
+	/*
+		This function checks through a container to see if it is sorted
+		in ascending order.
+
+		If sorted, it returns true; else returns false.
+
+	*/
+
+	//Iterate through each element in the container
 	for (auto it = first; it != last; ++it)
 	{
+		//If the next item is not the last item...
 		if (std::next(it) != last)
 		{
+			//...compare the current item to the next item
+			//If this item is NOT smaller than the next item
 			if (!cmp(*it, *std::next(it)))
 			{
+				//return false
 				return false;
 			}
+			//else continue through the loop
 		}
 	}
-	
+	//Since we got through the whole container, every 
+	//item is smaller than the next, so we are sorted.
+	//Return true
 	return true;
 
 }

@@ -257,6 +257,84 @@ void testMergeSort(void)
 	Logger::instance().log(LoggerLevel_normal, "This took " + to_string(basicTime) + "s.");
 }
 
+void testQuickSort()
+{
+	Logger::instance().log(LoggerLevel_normal, "Now testing quick sort");
+
+	srand((unsigned)time(NULL));
+
+	vector<int> myVector(10000, 1);
+	for (auto i = 0; i < myVector.size(); ++i)
+	{
+		myVector.at(i) = rand() % 10000 + 1; //random number in the range 1 - 10000
+	}
+
+	string myVectorStr;
+	for (auto i = 0; i < 11; ++i)
+	{
+		myVectorStr += to_string(myVector.at(i));
+		myVectorStr += " ";
+	}
+
+	vector<int> myVectorOriginal = myVector;
+	vector<int> myVector2 = myVector;
+
+	Logger::instance().log(LoggerLevel_normal, "Before sorting myVector is: " + myVectorStr);
+
+	clock_t start;
+	start = std::clock();
+	quicksort(myVector.begin(), myVector.end());
+	double basicTime = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+
+	myVectorStr = "";
+	for (auto i = 0; i < 11; ++i)
+	{
+		myVectorStr += to_string(myVector.at(i));
+		myVectorStr += " ";
+	}
+
+	Logger::instance().log(LoggerLevel_normal, "After merge_sort myVector is: " + myVectorStr);
+	Logger::instance().log(LoggerLevel_normal, "This took " + to_string(basicTime) + "s.");
+
+	Logger::instance().log(LoggerLevel_normal, "Now testing sorting rectangle objects");
+
+	vector<Rectangle> myRectangles;
+
+	for (auto i = 0; i < 10000; ++i)
+	{
+		Rectangle r((rand() % 100) + 1, (rand() % 100) + 1);
+		myRectangles.push_back(r);
+	}
+
+	myVectorStr = "";
+	for (auto i = 0; i < 11; ++i)
+	{
+		myVectorStr += to_string(myRectangles.at(i).getArea());
+		myVectorStr += " ";
+	}
+
+	Logger::instance().log(LoggerLevel_normal, "Before sorting myRectangles is: " + myVectorStr);
+
+	vector<Rectangle>myRectangles2 = myRectangles;
+	vector<Rectangle>myRectangles3 = myRectangles;
+
+	//Logger::instance().log(LoggerLevel_normal, to_string(myRectangles.at(0).getArea()));
+
+	start = std::clock();
+	quicksort(myRectangles.begin(), myRectangles.end());
+	basicTime = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+
+	myVectorStr = "";
+	for (auto i = 0; i < 11; ++i)
+	{
+		myVectorStr += to_string(myRectangles.at(i).getArea());
+		myVectorStr += " ";
+	}
+	Logger::instance().log(LoggerLevel_normal, "After merge_sort myRectangles is: " + myVectorStr);
+	//Logger::instance().log(LoggerLevel_normal, to_string(check_sorted(myRectangles.begin(), myRectangles.end())));
+	Logger::instance().log(LoggerLevel_normal, "This took " + to_string(basicTime) + "s.");
+}
+
 int main()
 {
 	Logger::instance().log(LoggerLevel_critical, "Does this project work? Let's see...");
@@ -269,8 +347,9 @@ int main()
 
 	//testInsertionSort();
 
-	testMergeSort();
+	//testMergeSort();
 
+	testQuickSort();
 
 	Logger::instance() << "Press the enter key to exit...";
 	std::cin.ignore(std::cin.rdbuf()->in_avail() + 1);

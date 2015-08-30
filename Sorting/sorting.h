@@ -2,8 +2,6 @@
 
 #include <vector>
 
-using namespace std;
-
 template<typename T>
 static void basicSelectionSort(vector<T>& t)
 {
@@ -180,6 +178,7 @@ void merge_sort(ForwardIterator first, ForwardIterator last, Compare cmp = Compa
 
 	//First check the size of the container we are sorting
 	auto const N = std::distance(first, last);
+
 	//If the container only has one item, we're already done
 	if (N < 2) return;
 
@@ -194,4 +193,38 @@ void merge_sort(ForwardIterator first, ForwardIterator last, Compare cmp = Compa
 
 	//Finally merge the sorted sections together again
 	std::inplace_merge(first, middle, last, cmp);
+}
+
+template<typename ForwardIterator, typename Compare = std::less<typename std::iterator_traits<ForwardIterator>::value_type> >
+void quicksort(ForwardIterator first, ForwardIterator last, Compare cmp = Compare())
+{
+	//First check the container size:
+	auto const N = std::distance(first, last);
+
+	//If the container has only one item, we're already done
+	if (N < 2) return;
+
+	//Choose the midpoint as the pivot value
+	auto middle = first + (N / 2);
+
+	//const auto pivotValue = *middle;
+
+	//Swap the middle to the front
+	std::iter_swap(first, middle);
+	
+	unsigned int i = 1;
+	for (int j = 1; j < N; ++j)
+	{
+		if (cmp(*(first + j), *first))
+		{
+			std::iter_swap(first + j, first + i);
+			++i;
+		}
+	}
+
+	std::iter_swap(first, first + i - 1);
+
+	quicksort(first, first + i - 1,cmp);
+	quicksort(first + i, last,cmp);
+
 }

@@ -46,16 +46,20 @@ int wmain(int argc, wchar_t **args) {
 	cout << "Number of active processor groups: " << GetActiveProcessorGroupCount() << endl;
 
 	cout << "============================" << endl << endl;
-
+        
+        //for each processor we create a thread and attempt an operation
 	for (DWORD_PTR i = 0; i < c; i++) {
-		
+
+		//these two variables are for creating threads
 		unsigned m_id = 0;
 		DWORD_PTR m_mask = 1 << i;
+
 		//
 		//m_threads[i] = CreateThread(NULL, 0, (LPTHREAD_START_ROUTINE)threadMain, (LPVOID)i, NULL, &m_id);
 		m_threads[i] = (HANDLE)_beginthreadex(NULL, 0, &threadMain, (LPVOID)i, NULL, &m_id);
 		//
 
+                //set eachthread to run on a separate CPU core
 		SetThreadAffinityMask(m_threads[i], m_mask);
 		//SetThreadIdealProcessor(m_threads[i], m_mask);
 
@@ -76,7 +80,9 @@ int wmain(int argc, wchar_t **args) {
 	return 0;
 }
 
+//simple function for each thread to execute
 unsigned __stdcall threadMain(void* p) {
-	printf("Current processor number: %d\n", (DWORD)GetCurrentProcessorNumber());
+	//print the number of the processor we are currently using
+        printf("Current processor number: %d\n", (DWORD)GetCurrentProcessorNumber());
 	return 0;
 }

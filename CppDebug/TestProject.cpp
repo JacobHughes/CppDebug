@@ -283,7 +283,7 @@ void testQuickSort()
 
 	clock_t start;
 	start = std::clock();
-	quicksort(myVector.begin(), myVector.end());
+	quick_sort(myVector.begin(), myVector.end());
 	double basicTime = (std::clock() - start) / (double)CLOCKS_PER_SEC;
 
 	myVectorStr = "";
@@ -321,7 +321,7 @@ void testQuickSort()
 	//Logger::instance().log(LoggerLevel_normal, to_string(myRectangles.at(0).getArea()));
 
 	start = std::clock();
-	quicksort(myRectangles.begin(), myRectangles.end());
+	quick_sort(myRectangles.begin(), myRectangles.end());
 	basicTime = (std::clock() - start) / (double)CLOCKS_PER_SEC;
 
 	myVectorStr = "";

@@ -174,6 +174,7 @@ void merge_sort(ForwardIterator first, ForwardIterator last, Compare cmp = Compa
 	
 		Complexity / efficiency:
 		Average case:	O( n * log(n) )
+		Worst case:		O( n * log(n) )
 	*/
 
 	//First check the size of the container we are sorting
@@ -196,8 +197,22 @@ void merge_sort(ForwardIterator first, ForwardIterator last, Compare cmp = Compa
 }
 
 template<typename ForwardIterator, typename Compare = std::less<typename std::iterator_traits<ForwardIterator>::value_type> >
-void quicksort(ForwardIterator first, ForwardIterator last, Compare cmp = Compare())
+void quick_sort(ForwardIterator first, ForwardIterator last, Compare cmp = Compare())
 {
+	/*
+		This is an iterator implementation of the quick sort algorithm.
+
+		This algorithm recursively sorts two smaller sorting problems in
+		a container at either side of a pivot point.
+
+		Quicksort partitions an array into items that are less than the 
+		pivot and those that are greater than or equal to the pivot
+
+		Complexity / efficiency:
+		Average case:	O( n * log(n) )
+		Worst case:		O( n^2 )
+	*/
+
 	//First check the container size:
 	auto const N = std::distance(first, last);
 
@@ -207,11 +222,11 @@ void quicksort(ForwardIterator first, ForwardIterator last, Compare cmp = Compar
 	//Choose the midpoint as the pivot value
 	auto middle = first + (N / 2);
 
-	//const auto pivotValue = *middle;
-
 	//Swap the middle to the front
 	std::iter_swap(first, middle);
 	
+	//Sort the items about the pivot value using 
+	//our compare function, cmp
 	unsigned int i = 1;
 	for (int j = 1; j < N; ++j)
 	{
@@ -222,8 +237,10 @@ void quicksort(ForwardIterator first, ForwardIterator last, Compare cmp = Compar
 		}
 	}
 
+	//Put the pivot back into position
 	std::iter_swap(first, first + i - 1);
 
+	//Sort each the array at each side of the pivot
 	quicksort(first, first + i - 1,cmp);
 	quicksort(first + i, last,cmp);
 

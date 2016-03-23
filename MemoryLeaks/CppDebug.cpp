@@ -1,11 +1,7 @@
 /*=======================================================
 	Code written by Jacob Hughes
 
-	Copyright (C) Jacob Hughes 2015
-
-	Contact for use:
-
-	yacolt@gmail.com
+	jacob.solomon.hughes@gmail.com
 	https://github.com/JacobHughes/
 =======================================================*/
 

@@ -1,3 +1,9 @@
+/*=======================================================
+	Code written by Jacob Hughes
+
+	jacob.solomon.hughes@gmail.com
+	https://github.com/JacobHughes/
+=======================================================*/
 #pragma once
 
 #include "HashKeyFunctions.h"

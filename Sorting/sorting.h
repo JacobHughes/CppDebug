@@ -1,3 +1,10 @@
+/*=======================================================
+	Code written by Jacob Hughes
+
+	jacob.solomon.hughes@gmail.com
+	https://github.com/JacobHughes/
+=======================================================*/
+
 #pragma once
 
 #include <vector>
@@ -241,7 +248,7 @@ void quick_sort(ForwardIterator first, ForwardIterator last, Compare cmp = Compa
 	std::iter_swap(first, first + i - 1);
 
 	//Sort each the array at each side of the pivot
-	quicksort(first, first + i - 1,cmp);
-	quicksort(first + i, last,cmp);
+	quick_sort(first, first + i - 1,cmp);
+	quick_sort(first + i, last,cmp);
 
 }

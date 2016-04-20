@@ -427,10 +427,10 @@ void compareAccumulate()
 int main()
 {
 	setUpDebugEnvironment();
-
+	Logger::instance().setMode(LoggerMode_critical);
 	Logger::instance().log(LoggerLevel_critical, "Does this project work? Let's see...");
 
-	//Logger::instance().setMode(LoggerMode_silent);
+	
 
 	//Logger::instance().log(LoggerLevel_normal, to_string(Logger::instance().getMode()));
 
@@ -453,7 +453,7 @@ int main()
 	compareAccumulate();
 
 	Logger::instance().log(LoggerLevel_critical, "Oh my god!");
-
+	Logger::instance().setMode(LoggerMode_verbose);
 	Logger::instance() << "Press the enter key to exit...";
 	std::cin.ignore(std::cin.rdbuf()->in_avail() + 1);
 	return 0;

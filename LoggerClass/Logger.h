@@ -22,7 +22,8 @@
 enum LoggerMode
 {
 	LoggerMode_verbose,		//always output to cout
-	LoggerMode_silent		//do not output to cout
+	LoggerMode_silent,		//do not output to cout
+	LoggerMode_critical		//only output critical messages
 };
 
 enum LoggerLevel
@@ -104,6 +105,12 @@ public:
 
 		//if mode is 0, send to cout
 		if (this->mode == LoggerMode_verbose)
+		{
+			std::cout << timeStamp << message << std::endl;
+		}
+
+		//if we want to see only critical message
+		if (this->mode == LoggerMode_critical && level == LoggerLevel_critical)
 		{
 			std::cout << timeStamp << message << std::endl;
 		}

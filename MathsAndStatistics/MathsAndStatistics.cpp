@@ -116,8 +116,8 @@ bool isMagicSquare(std::vector< vector<int>> matrix)
 		First the matric needs to actually be a square
 	==============================================================*/
 
-	int noOfRows = matrix.size();
-	int noOfColumns = matrix.at(0).size();
+	int noOfRows = (int)matrix.size();
+	int noOfColumns = (int)matrix.at(0).size();
 
 	if (noOfColumns != noOfRows)
 	{
@@ -194,7 +194,7 @@ bool isMagicSquare(std::vector< vector<int>> matrix)
 	/*==============================================================
 		Now sum bottom-left to top-right diagonal and compare
 	==============================================================*/
-	int i = matrix.size() - 1;
+	auto i = matrix.size() - 1;
 	for (auto j = 0; j < noOfColumns; ++j)
 	{
 		currentSum += matrix.at(i).at(j);
@@ -266,7 +266,7 @@ struct_Histogram histogram(vector<double> data, double binWidth)
 		//Check we do not exceed the container
 		if (binIndex >= result.binEdges.size())
 		{
-			binIndex = result.binEdges.size() - 1;
+			binIndex = (int)result.binEdges.size() - 1;
 		}
 
 		//Increment the counts at this bin
@@ -331,7 +331,7 @@ struct_Histogram histogram(vector<double> data, double binWidth, double binStart
 		//Check we do not exceed the container
 		if (binIndex >= result.binEdges.size())
 		{
-			binIndex = result.binEdges.size() - 1;
+			binIndex = (int)result.binEdges.size() - 1;
 		}
 
 		//Increment the counts at this bin

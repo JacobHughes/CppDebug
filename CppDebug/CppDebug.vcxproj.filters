@@ -18,9 +18,6 @@
     <ClCompile Include="TestProject.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\LoggerClass\Logger.cpp">
-      <Filter>Resource Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\MathsAndStatistics\MathsAndStatistics.cpp">
       <Filter>Resource Files</Filter>
     </ClCompile>
@@ -56,7 +53,7 @@
     <ClInclude Include="..\Sorting\sorting.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\Rectangle\rectangle.h">
+    <ClInclude Include="..\MyRectangle\MyRectangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -86,11 +86,13 @@ int debugMemoryLocation(int memoryLocation)
 	{
 
 		//Catch any exception and see what it is
-	std:cerr << "Error setting break point _CrtSetBreakAlloc(). WHAT: " << e.what() << endl;
+		std::cerr << "Error setting break point _CrtSetBreakAlloc(). WHAT: " << e.what() << endl;
 
 		//Return partial success, memory leaks logged but flags not set
 		return static_cast<int>(fail);
 	}
+
+	
 
 	//Return total success
 	return static_cast<int>(success);

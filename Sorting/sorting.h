@@ -7,7 +7,10 @@
 
 #pragma once
 
+#include <iterator>
+#include <type_traits>
 #include <vector>
+#include <algorithm>
 
 template<typename T>
 static void basicSelectionSort(vector<T>& t)
@@ -26,7 +29,7 @@ static void basicSelectionSort(vector<T>& t)
 		Average case:	O( n^2 )
 	
 	*/
-	for (int last = (t.size()-1); last >= 1; last--)
+	for (auto last = (t.size()-1); last >= 1; last--)
 	{
 		int largest = 0;
 		

@@ -8,11 +8,11 @@ void testRectangle()
 {
 	Logger::instance().log(LoggerLevel_normal, "Testing a rectangle");
 
-	Rectangle myR(2.5, 4.5);
+	MyRectangle myR(2.5, 4.5);
 
 	Logger::instance().log(LoggerLevel_normal, "The area of this rectangle is: " + to_string(myR.getArea()));
 
-	Rectangle myR2(5.0, 5.0);
+	MyRectangle myR2(5.0, 5.0);
 
 	Logger::instance().log(LoggerLevel_normal, "The area of the second rectangle is: " + to_string(myR.getArea()));
 
@@ -27,22 +27,23 @@ void testRectangle()
 
 }
 
+
 void sortRectangles()
 {
 	Logger::instance().log(LoggerLevel_normal, "Now testing sorting rectangle objects");
 
 	srand((unsigned)time(NULL));
 
-	vector<Rectangle> myRectangles;
+	vector<MyRectangle> myRectangles;
 
 	for (auto i = 0; i < 10000; ++i)
 	{
-		Rectangle r(rand() % 10 + 1, rand() % 10 + 1);
+		MyRectangle r(rand() % 10 + 1, rand() % 10 + 1);
 		myRectangles.push_back(r);
 	}
 
-	vector<Rectangle>myRectangles2 = myRectangles;
-	vector<Rectangle>myRectangles3 = myRectangles;
+	vector<MyRectangle>myRectangles2 = myRectangles;
+	vector<MyRectangle>myRectangles3 = myRectangles;
 
 	//Logger::instance().log(LoggerLevel_normal, to_string(myRectangles.at(0).getArea()));
 
@@ -220,11 +221,11 @@ void testMergeSort(void)
 
 	Logger::instance().log(LoggerLevel_normal, "Now testing sorting rectangle objects");
 	
-	vector<Rectangle> myRectangles;
+	vector<MyRectangle> myRectangles;
 
 	for (auto i = 0; i < 10000; ++i)
 	{
-		Rectangle r((rand() % 100) + 1, (rand() % 100) + 1);
+		MyRectangle r((rand() % 100) + 1, (rand() % 100) + 1);
 		myRectangles.push_back(r);
 	}
 
@@ -237,8 +238,8 @@ void testMergeSort(void)
 
 	Logger::instance().log(LoggerLevel_normal, "Before sorting myRectangles is: " + myVectorStr);
 
-	vector<Rectangle>myRectangles2 = myRectangles;
-	vector<Rectangle>myRectangles3 = myRectangles;
+	vector<MyRectangle>myRectangles2 = myRectangles;
+	vector<MyRectangle>myRectangles3 = myRectangles;
 
 	//Logger::instance().log(LoggerLevel_normal, to_string(myRectangles.at(0).getArea()));
 
@@ -298,11 +299,11 @@ void testQuickSort()
 
 	Logger::instance().log(LoggerLevel_normal, "Now testing sorting rectangle objects");
 
-	vector<Rectangle> myRectangles;
+	vector<MyRectangle> myRectangles;
 
 	for (auto i = 0; i < 10000; ++i)
 	{
-		Rectangle r((rand() % 100) + 1, (rand() % 100) + 1);
+		MyRectangle r((rand() % 100) + 1, (rand() % 100) + 1);
 		myRectangles.push_back(r);
 	}
 
@@ -315,8 +316,8 @@ void testQuickSort()
 
 	Logger::instance().log(LoggerLevel_normal, "Before sorting myRectangles is: " + myVectorStr);
 
-	vector<Rectangle>myRectangles2 = myRectangles;
-	vector<Rectangle>myRectangles3 = myRectangles;
+	vector<MyRectangle>myRectangles2 = myRectangles;
+	vector<MyRectangle>myRectangles3 = myRectangles;
 
 	//Logger::instance().log(LoggerLevel_normal, to_string(myRectangles.at(0).getArea()));
 
@@ -335,9 +336,103 @@ void testQuickSort()
 	Logger::instance().log(LoggerLevel_normal, "This took " + to_string(basicTime) + "s.");
 }
 
+void testVectorAllocation()
+{
+	int reps = 100;
+	vector<double> unallocated;
+	vector<double> preallocated;
+	preallocated.reserve(reps);
+
+	clock_t start = std::clock();
+	
+	for (auto i = 0; i < reps; ++i)
+	{
+		unallocated.push_back(10);
+	}
+	double unallocatedTime = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+
+	Logger::instance().log(LoggerLevel_normal, "Time for unallocated vector of " + to_string(reps) + ": " + to_string(unallocatedTime));
+
+	start = std::clock();
+
+	for (auto i = 0; i < reps; ++i)
+	{
+		preallocated.push_back(10);
+	}
+	double preallocatedTime = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+
+	Logger::instance().log(LoggerLevel_normal, "Time for preallocated vector of " + to_string(reps) + ": " + to_string(preallocatedTime));
+}
+
+void testArrayAllocation()
+{
+	const int reps = 100;// std::numeric_limits<int>::max();
+	const int bigReps = 100;
+	double testArray[reps];
+	double * testArrayPtr = new double[bigReps];
+
+	clock_t start = std::clock();
+
+	for (auto i = 0; i < reps; ++i)
+	{
+		testArray[i] =10;
+	}
+
+	double arrayTime = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+
+	Logger::instance().log(LoggerLevel_normal, "Time for stack preallocatd array of " + to_string(reps) + ": " + to_string(arrayTime));
+
+	start = std::clock();
+
+	for (auto i = 0; i < reps; ++i)
+	{
+		testArrayPtr[i] = 10;
+	}
+
+	double bigArrayTime = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+
+	Logger::instance().log(LoggerLevel_normal, "Time for heap preallocatd array of " + to_string(bigReps) + ": " + to_string(bigArrayTime));
+
+	delete[] testArrayPtr;
+
+}
+
+void compareAccumulate()
+{
+	int reps = 100;
+	vector<double> accManual(reps, 1);
+	vector<double> accBuiltIn(reps, 1);
+
+	double resultManual = 0.0;
+	double resultBuiltIn = 0.0;
+	
+	clock_t start = std::clock();
+
+	for (int i = 0; i < reps; ++i)
+	{
+		resultManual += accManual.at(i);
+	}
+	double manualTime = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+	Logger::instance().log(LoggerLevel_normal, "Time to sum vector manually with " + to_string(reps) + " items: " + to_string(manualTime));
+
+	start = std::clock();
+
+	resultBuiltIn = std::accumulate(accBuiltIn.begin(), accBuiltIn.end(), 0.0);
+	
+	double builtInTime = (std::clock() - start) / (double)CLOCKS_PER_SEC;
+	Logger::instance().log(LoggerLevel_normal, "Time to sum vector using builtin with " + to_string(reps) + " items: " + to_string(builtInTime));
+
+}
+
 int main()
 {
+	setUpDebugEnvironment();
+
 	Logger::instance().log(LoggerLevel_critical, "Does this project work? Let's see...");
+
+	//Logger::instance().setMode(LoggerMode_silent);
+
+	//Logger::instance().log(LoggerLevel_normal, to_string(Logger::instance().getMode()));
 
 	//testRectangle();
 
@@ -349,7 +444,15 @@ int main()
 
 	//testMergeSort();
 
-	testQuickSort();
+	//testQuickSort();
+
+	testVectorAllocation();
+
+	testArrayAllocation();
+
+	compareAccumulate();
+
+	Logger::instance().log(LoggerLevel_critical, "Oh my god!");
 
 	Logger::instance() << "Press the enter key to exit...";
 	std::cin.ignore(std::cin.rdbuf()->in_avail() + 1);

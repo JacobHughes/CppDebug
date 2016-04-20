@@ -14,11 +14,15 @@
 #include <mutex>
 #include <memory>
 
+#include <Windows.h>
+
+
+
 //Different modes for the Logger
 enum LoggerMode
 {
-	verbose,	//always output to cout
-	silent		//do not output to cout
+	LoggerMode_verbose,		//always output to cout
+	LoggerMode_silent		//do not output to cout
 };
 
 enum LoggerLevel
@@ -27,7 +31,6 @@ enum LoggerLevel
 	LoggerLevel_critical	//critical level messages
 };
 
-using namespace std;
 
 class Logger
 {
@@ -50,45 +53,156 @@ public:
 	//Static instance to ensure only one Logger can exist
 	static Logger & instance()
 	{
-		static Logger instance;
-		return instance;
+		//This creates a small ~720 + ~16 byte memory leak.
+		static Logger * singleInstance = new Logger();		
+		return * singleInstance;
 	}
 
-	~Logger();
+	~Logger()
+	{
+		//Close and flush all of the logging streams
+		if (this->fullLog.is_open())
+		{
+			this->fullLog.flush();
+			this->fullLog.close();
+		}
+
+		if (this->criticalLog.is_open())
+		{
+			this->criticalLog.flush();
+			this->criticalLog.close();
+		}
+	}
 
 	//Function to set the logging mode (verbose or silent)
 	inline void setMode(LoggerMode m){ this->mode = m; };
 
+	inline LoggerMode getMode(void) { return this->mode; }
+
 	//operator<< to output to the normal level log file
-	inline void operator << (const string &message) { this->log(LoggerLevel_normal, message); };
+	template<typename T>
+	inline void operator<< (const T &message) { this->log(LoggerLevel_normal, message); };
 	
 	//Function to log a message
-	void log(LoggerLevel level, const string &message);
+	template<typename T>
+	void log(LoggerLevel level, const T &message)
+	{
+		//Lock so we don't have output problems
+		this->loggerMutex.lock();
+
+		//Create a timestamp
+		rawTime = time(0);		
+		localtime_s(&timeInfo, &rawTime);
+		std::string timeStamp = std::to_string(timeInfo.tm_hour) + ":" + std::to_string(timeInfo.tm_min) + ":" + std::to_string(timeInfo.tm_sec) + " ";
+
+		//If this message is critical, write to critical log
+		if (level == LoggerLevel_critical)
+		{
+			SetConsoleTextAttribute(this->hConsole, redOutput);
+			criticalLog << timeStamp << message << std::endl;
+		}
+
+		//if mode is 0, send to cout
+		if (this->mode == LoggerMode_verbose)
+		{
+			std::cout << timeStamp << message << std::endl;
+		}
+
+		//Always write to full log
+		fullLog << timeStamp << message << std::endl;
+
+		SetConsoleTextAttribute(this->hConsole, whiteOutput);
+		//Unlock
+		this->loggerMutex.unlock();
+	}
 
 protected:
 	//Constructor is protected / private
-	Logger();
-	
+	Logger()
+	{
+		//get output window
+		hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
+		//Start the output as white
+		SetConsoleTextAttribute(this->hConsole, whiteOutput);
+
+		//setup directories for logs
+		setUpDirectories();
+		
+		//Create a timestamp
+		rawTime = time(0);
+		localtime_s(&timeInfo, &rawTime);
+		std::string dateAddition = std::to_string(timeInfo.tm_year) + "-" + std::to_string(timeInfo.tm_mon) + "-" + std::to_string(timeInfo.tm_mday);
+
+		//Create the full log stream
+		while (!fullLog.is_open())
+		{
+			this->fullLog.open("./logs/LogFile_" + dateAddition + "_fullLog.txt", std::ofstream::out | std::ofstream::app);
+		}
+
+		//Create the critical log stream
+		while (!criticalLog.is_open())
+		{
+			this->criticalLog.open("./logs/LogFile_" + dateAddition + "_criticalLog.txt", std::ofstream::out | std::ofstream::app);
+		}
+	}
+
+	void setUpDirectories()
+	{
+		if (directoryExists("./logs/"))
+		{
+			//log(LoggerLevel_critical, "Directory exists");
+		}
+		else
+		{
+			//log(LoggerLevel_critical, "Directory doesn't exist");
+			CreateDirectory("./logs/", NULL);
+		}
+	}
+
+	bool directoryExists(const std::string & directoryName)
+	{
+		DWORD fileAttributes = GetFileAttributes(directoryName.c_str());
+
+		if (fileAttributes == INVALID_FILE_ATTRIBUTES)
+		{
+			return false;
+		}
+
+		if (fileAttributes & FILE_ATTRIBUTE_DIRECTORY)
+		{
+			return true;
+		}
+		
+		return false;
+	}
+
 	//remove the copy and = methods
 	Logger(Logger const&) = delete;
 	void operator=(Logger const&) = delete;
 	
 	//Set the default logging mode to be verbose
-	LoggerMode mode = verbose;
+	LoggerMode mode = LoggerMode_verbose;
 	
 	//Stream to output everything
-	ofstream fullLog;
+	std::ofstream fullLog;
 
 	//Stream to output critical flagged messages
-	ofstream criticalLog;
+	std::ofstream criticalLog;
 
 	//Time and structures for handling time stamps
 	time_t rawTime;
 	struct tm timeInfo;
-	string dateAddition;
+	std::string dateAddition;
 
 	//Mutex for thread safe ofstreams
-	mutex loggerMutex;
+	std::mutex loggerMutex;
+
+	//windows HANDLE to the console
+	HANDLE hConsole;
 	
+	//basic white output colour
+	int whiteOutput = 15;
+	//basic red output colour
+	int redOutput = 12;
 };
 

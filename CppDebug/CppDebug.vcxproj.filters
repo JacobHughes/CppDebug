@@ -56,5 +56,8 @@
     <ClInclude Include="..\MyRectangle\MyRectangle.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\VectorMath\VectorMath.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

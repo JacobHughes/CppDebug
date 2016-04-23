@@ -135,6 +135,7 @@
     <ClInclude Include="..\MemoryLeaks\CppDebug.h" />
     <ClInclude Include="..\MyRectangle\MyRectangle.h" />
     <ClInclude Include="..\Sorting\sorting.h" />
+    <ClInclude Include="..\VectorMath\VectorMath.h" />
     <ClInclude Include="TestProject.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

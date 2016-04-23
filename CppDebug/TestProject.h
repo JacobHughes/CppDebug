@@ -20,6 +20,8 @@
 //Include sorting resources
 #include "../Sorting/sorting.h"
 
+#include "../VectorMath/VectorMath.h"
+
 #include <time.h>
 #include <ctime>
 #include <stdlib.h>

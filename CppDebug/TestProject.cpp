@@ -427,7 +427,7 @@ void compareAccumulate()
 int main()
 {
 	setUpDebugEnvironment();
-	Logger::instance().setMode(LoggerMode_critical);
+	Logger::instance().setMode(LoggerMode_verbose);
 	Logger::instance().log(LoggerLevel_critical, "Does this project work? Let's see...");
 
 	
@@ -451,6 +451,14 @@ int main()
 	testArrayAllocation();
 
 	compareAccumulate();
+
+	VectorMath::Vector2D v1(0.5, 0.5);
+	VectorMath::Vector2D v2(0.5, 0.5);
+
+	VectorMath::Vector3D myVector(0.5,0.2,1);
+		
+	Logger::instance().log(LoggerLevel_normal, v1 += v2);
+	Logger::instance().log(LoggerLevel_normal, v1.toString());
 
 	Logger::instance().log(LoggerLevel_critical, "Oh my god!");
 	Logger::instance().setMode(LoggerMode_verbose);

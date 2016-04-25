@@ -12,7 +12,7 @@
 #endif // !M_PI
 
 #include <cmath>
-
+#include <string>
 
 
 
@@ -39,6 +39,20 @@ namespace VectorMath
 
 		//Get the vector length
 		double getLength() { return std::sqrt(x*x + y*y + z*z); }
+
+		// Want a method to output a vector
+		string toString() const
+		{
+			std::string response = "Vector3D: (" + to_string(this->x) + "," + to_string(this->y) + "," + to_string(this->z) + ")";
+			return response;
+		}
+
+		//Streaming operator for terminal
+		inline friend std::ostream& operator<<(std::ostream& os, const Vector3D & vec)
+		{
+			os << vec.toString();
+			return os;
+		}
 
 	};
 
@@ -153,6 +167,20 @@ namespace VectorMath
 
 		//Get the vector length
 		double getLength() { return std::sqrt(x*x + y*y); }
+
+		// Want a method to output a vector
+		string toString() const
+		{
+			std::string response = "Vector2D: (" + to_string(this->x) + "," + to_string(this->y) + ")";
+			return response;
+		}
+
+		//Streaming operator for terminal
+		inline friend std::ostream& operator<<(std::ostream& os, const Vector2D & vec) 
+		{
+			os << vec.toString();
+			return os; 
+		}
 	};
 
 	const bool operator== (const Vector2D& lhs, const Vector2D& rhs)
@@ -206,5 +234,36 @@ namespace VectorMath
 	{
 		return Vector2D(vec.x / vec.getLength(), vec.y / vec.getLength());
 	}
+
+	//Rotate a 2D vector by an angle
+	const Vector2D rotateVector2D(const Vector3D& vec, const double& angle)
+	{
+		double angleInRad = angle * M_PI / 180.0;
+		return Vector2D(std::cos(angleInRad)*vec.x + -std::sin(angleInRad)*vec.y,
+			std::sin(angleInRad)*vec.x + std::cos(angleInRad)*vec.y);
+	}
+
+	class Quaternion
+	{
+	public:
+		//"Empty" initialisation
+		Quaternion() : scalar(1.0),complexComponent(0.0,0.0,0.0) {}
+
+		//Initialisation from scalar and vector
+		Quaternion(const double& s, const Vector3D& complex) : scalar(s), complexComponent(complex) {}
+
+		//Initialisation from 4 scalars
+		Quaternion(const double& s, const double& x, const double& y, const double& z) : scalar(s), complexComponent(x,y,z){}
+
+		//~Quaternion();
+
+		//Real part of a quaternion
+		double scalar;
+
+		//Complext part of quaternion
+		Vector3D complexComponent;
+	private:
+
+	};
 
 }
